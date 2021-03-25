@@ -6,6 +6,8 @@ This is a game template for games using the [EgoVenture First Person Adventure f
 
 For details on how to use this template, refer to the [official EgoVenture documentation](https://github.com/deep-entertainment/egoventure/blob/master/docs/getting_started.md).
 
+The game sources are licensed under the [MIT license](LICENSE), the included media is licensed under the [CC-BY-SA license](MEDIA-LICENSE.md).
+
 ## Contributions
 
 This template includes the following resources:
