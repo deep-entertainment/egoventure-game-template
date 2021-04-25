@@ -2,7 +2,7 @@
   "title": "EgoVenture Game Template",
   "description": "Game template for games using the EgoVenture First Person Adventure framework for Godot.",
   "category_id": "8",
-  "godot_version": "3.2",
+  "godot_version": "3.3",
   "version_string": "{{ context.release.tag_name }}",
   "cost": "MIT",
   "download_provider": "GitHub",
