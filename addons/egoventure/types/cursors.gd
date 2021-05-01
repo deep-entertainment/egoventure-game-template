@@ -13,18 +13,18 @@ enum Type {
 	GO_BACKWARDS
 	TURN_RIGHT,
 	TURN_LEFT,
-	CORNER_RIGHT,
-	CORNER_LEFT,
+	UP,
+	DOWN,
 	USE,
 	LOOK,
 	SPEAK,
 	EXIT,
 	MAP,
 	HAND,
-	GO_FORWARD_X,
 	CUSTOM1,
 	CUSTOM2,
 	CUSTOM3,
+	CUSTOM4
 }
 
 
@@ -35,18 +35,18 @@ const CURSOR_MAP: Dictionary = {
 	Type.GO_BACKWARDS: Input.CURSOR_DRAG,
 	Type.TURN_RIGHT: Input.CURSOR_HSPLIT,
 	Type.TURN_LEFT: Input.CURSOR_VSPLIT,
-	Type.CORNER_RIGHT: Input.CURSOR_HSIZE,
-	Type.CORNER_LEFT: Input.CURSOR_VSIZE,
+	Type.UP: Input.CURSOR_HSIZE,
+	Type.DOWN: Input.CURSOR_VSIZE,
 	Type.USE: Input.CURSOR_POINTING_HAND,
 	Type.LOOK: Input.CURSOR_HELP,
 	Type.SPEAK: Input.CURSOR_IBEAM,
 	Type.EXIT: Input.CURSOR_BDIAGSIZE,
 	Type.MAP: Input.CURSOR_FDIAGSIZE,
 	Type.HAND: Input.CURSOR_MOVE,
-	Type.GO_FORWARD_X: Input.CURSOR_BUSY,
 	Type.CUSTOM1: Input.CURSOR_CAN_DROP,
 	Type.CUSTOM2: Input.CURSOR_FORBIDDEN,
 	Type.CUSTOM3: Input.CURSOR_WAIT,
+	Type.CUSTOM4: Input.CURSOR_BUSY
 }
 
 
@@ -100,16 +100,17 @@ func override(
 #
 # - type: The type to reset (based on the Type enum)
 func reset(type):
-	var target_mouse_position = get_viewport().get_mouse_position() - \
-			_overridden_cursors[type]['hotspot'] + \
-			_default_cursors[type].cursor_hotspot
-	_overridden_cursors.erase(type)
-	Speedy.set_custom_mouse_cursor(
-		_default_cursors[type].cursor,
-		CURSOR_MAP[type],
-		_default_cursors[type].cursor_hotspot,
-		target_mouse_position
-	)
+	if type in _overridden_cursors:
+		var target_mouse_position = get_viewport().get_mouse_position() - \
+				_overridden_cursors[type]['hotspot'] + \
+				_default_cursors[type].cursor_hotspot
+		_overridden_cursors.erase(type)
+		Speedy.set_custom_mouse_cursor(
+			_default_cursors[type].cursor,
+			CURSOR_MAP[type],
+			_default_cursors[type].cursor_hotspot,
+			target_mouse_position
+		)
 
 
 # Return the texture of the specified hotspot type
