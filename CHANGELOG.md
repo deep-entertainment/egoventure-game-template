@@ -1,0 +1,12 @@
+## [0.28.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.27.0...0.28.0) (2021-07-09)
+
+
+### Features
+
+* Added release workflow ([b728892](https://github.com/deep-entertainment/egoventure-game-template/commit/b72889230b6d8bfd7239a2ee4709eb93d0f0bdff))
+* Egoventure 0.24.2 ([b8c91b6](https://github.com/deep-entertainment/egoventure-game-template/commit/b8c91b6f2651a61071c6274de2547930abe5c4ee))
+* Parrot 0.7.0 ([00c0a74](https://github.com/deep-entertainment/egoventure-game-template/commit/00c0a7477527bcf370dfe508dfafb687f9205a47))
+
+
+
+
