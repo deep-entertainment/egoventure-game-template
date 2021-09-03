@@ -1,3 +1,12 @@
+## [0.31.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.30.0...0.31.0) (2021-09-03)
+
+
+### Features
+
+* Egoventure 0.28.0 and Parrot 0.9.0 ([92a59ea](https://github.com/deep-entertainment/egoventure-game-template/commit/92a59ea3a167c7c9988af2086ea0599cc44718d4))
+
+
+
 ## [0.30.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.29.0...0.30.0) (2021-09-02)
 
 
