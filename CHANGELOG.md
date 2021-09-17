@@ -1,3 +1,12 @@
+### [0.31.1](https://github.com/deep-entertainment/egoventure-game-template/compare/0.31.0...0.31.1) (2021-09-17)
+
+
+### Bug Fixes
+
+* Egoventure 0.28.1 ([fb6fff8](https://github.com/deep-entertainment/egoventure-game-template/commit/fb6fff8c83c8a44e719804fa5227a17d27dee953))
+
+
+
 ## [0.31.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.30.0...0.31.0) (2021-09-03)
 
 
