@@ -1,3 +1,12 @@
+### [0.32.1](https://github.com/deep-entertainment/egoventure-game-template/compare/0.32.0...0.32.1) (2021-10-20)
+
+
+### Bug Fixes
+
+* Missing project.godot settings after change ([09bc276](https://github.com/deep-entertainment/egoventure-game-template/commit/09bc27689f39c9993b77bb6b6bc821ad432e1664))
+
+
+
 ## [0.32.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.31.1...0.32.0) (2021-10-19)
 
 
