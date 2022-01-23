@@ -1,3 +1,15 @@
+## [0.33.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.32.1...0.33.0) (2022-01-23)
+
+
+### Features
+
+* Adding egoventure version 0.28.1 ([3043736](https://github.com/deep-entertainment/egoventure-game-template/commit/3043736b655505e258bc3e39641f62211ba3632e))
+* Adding egoventure version 0.29.0 ([ae96cab](https://github.com/deep-entertainment/egoventure-game-template/commit/ae96cab5ddf8f39f6d6f27ed16c27ff872d7edb7))
+* Adding egoventure version 0.30.0 ([47378d1](https://github.com/deep-entertainment/egoventure-game-template/commit/47378d14c581525f04f47944f29e58396c06f423))
+* Adding speedy_gonzales version 0.5.0 ([81f6af3](https://github.com/deep-entertainment/egoventure-game-template/commit/81f6af3712097afcfd544c62a60212484bcd7fd5))
+
+
+
 ### [0.32.1](https://github.com/deep-entertainment/egoventure-game-template/compare/0.32.0...0.32.1) (2021-10-20)
 
 
