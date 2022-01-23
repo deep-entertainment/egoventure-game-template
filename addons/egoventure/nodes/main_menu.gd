@@ -130,6 +130,9 @@ func configure(configuration: GameConfiguration):
 			_get_bus_percent("Effects")
 	$Menu/Options/CenterContainer/VBox/Grid/Subtitles.pressed = \
 			EgoVenture.options_get_subtitles()
+	
+	# set save slot page to slot last modified
+	_save_slot_page = _get_save_slot_page_last_modified()
 
 
 # Toggle the display of the menu and play the menu music
@@ -199,6 +202,7 @@ func _on_Resume_pressed():
 # Quit was pressed. Show confirmation
 func _on_Quit_pressed():
 	$Menu/QuitConfirm.popup_centered()
+	$Menu/QuitConfirm.get_ok().release_focus()
 
 
 # Quit was confirmed. Just quit the game
@@ -239,6 +243,7 @@ func _on_slot_selected(slot: int, exists: bool):
 			# This save slot exists, show the confirmation dialog
 			_selected_slot = slot
 			$Menu/OverwriteConfirm.popup_centered()
+			$Menu/OverwriteConfirm.get_ok().release_focus()
 		else:
 			if disabled:
 				disabled = false
@@ -388,6 +393,31 @@ func _get_date_from_file(file: String) -> String:
 	return tr(_configuration.menu_saveslots_date_format).format(datetime)
 
 
+# Get the save slot page containing the slot that was last modified
+func _get_save_slot_page_last_modified() -> int:
+	var slot_last = 0
+	var time_last = 0
+	var save_dir = Directory.new()	
+	if save_dir.open("user://") == OK:
+		if save_dir.list_dir_begin(true) == OK:  # without navigational files
+			# iterate through save files of save directory and compare modification time
+			var slot_filename = save_dir.get_next()
+			while !slot_filename.empty():
+				if !save_dir.current_is_dir():  # skip directories
+					if slot_filename.begins_with("save_") and slot_filename.ends_with(".tres"):
+						var slot_number = slot_filename.trim_prefix("save_").trim_suffix(".tres")
+						if slot_number.is_valid_integer():
+							var slot_time = File.new().get_modified_time("user://" + slot_filename)
+							if slot_time > time_last:
+								time_last = slot_time
+								slot_last = slot_number.to_int()
+				slot_filename = save_dir.get_next()
+	
+	save_dir.list_dir_end()
+	# save slot page numbering starts with 1 and contains 12 save slots
+	return (slot_last / 12) + 1
+
+
 # Refresh the saveslots vie
 func _refresh_saveslots():
 	var save_dir = Directory.new()
@@ -507,6 +537,7 @@ func _on_Continue_pressed():
 func _on_NewGame_pressed():
 	if EgoVenture.has_continue_state():
 		$Menu/RestartConfirm.popup_centered()
+		$Menu/RestartConfirm.get_ok().release_focus()
 	else:
 		_on_RestartConfirm_confirmed()
 
@@ -558,3 +589,6 @@ func _on_Fullscreen_toggled(button_pressed):
 	EgoVenture.in_game_configuration.fullscreen = button_pressed
 	EgoVenture.save_in_game_configuration()
 	EgoVenture.set_full_screen()
+	if $Menu/Options.visible and _configuration.menu_switch_effect != null:
+		$Menu/Effects.stream = _configuration.menu_switch_effect
+		$Menu/Effects.play()
