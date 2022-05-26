@@ -1,0 +1,69 @@
+# Shared workflow to add a (pre-)released addon to the game template
+#
+# Can be used like this:
+#
+# on:
+#     release:
+#         types:
+#           - published
+# 
+# name: Push to game template
+# 
+# env:
+#     BRANCH: ${{ fromJson('{ "prereleased": "develop", "released": "main" }')[github.event.action] }}
+# 
+# jobs:
+#     game-template:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - uses: deep-entertainment/egoventure-game-template/.github/workflows/game-template.yml@${{ env.BRANCH }}
+#               with:
+#                 addon: <addon to publish> 
+#                 branch: "${{ env.branch }}"
+
+on: 
+    workflow_call:
+        inputs:
+            addon:
+                required: true
+                type: string
+            branch:
+                required: true
+                type: string
+
+name: Push to game template
+
+env:
+    BRANCH: ${{ inputs.branch }}
+
+jobs:
+    game-template:
+        name: Push new version to game template
+        runs-on: ubuntu-latest
+        env:
+            ADDON: "${{ inputs.addon }}"
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  path: "release"
+            - name: Checkout game template
+              uses: actions/checkout@v2
+              with: 
+                  repository: "deep-entertainment/egoventure-game-template"
+                  ref: "${{ env.BRANCH }}"
+                  path: "game-template"
+                  token: "${{ secrets.DEPLOYMENT_TOKEN }}"
+                  fetch-depth: 0
+            - name: "Copy ${{ env.ADDON }} version ${{ github.event.release.tag_name }}"
+              run: |
+                rm -rf game-template/addons/$ADDON
+                cp -r release/addons/$ADDON game-template/addons
+            - name: "Commit"
+              uses: EndBug/add-and-commit@v7.2.1
+              with:
+                cwd: game-template
+                message: 'feat: Adding ${{ env.ADDON }} version ${{ github.event.release.tag_name }}'
+                branch: "${{ env.BRANCH }}"
+                push: true
+

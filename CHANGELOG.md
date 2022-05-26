@@ -1,17 +1,11 @@
-## [0.34.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.33.0...0.34.0) (2022-02-19)
+## [0.35.0-develop.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.34.0...0.35.0-develop.0) (2022-05-26)
 
-
-### Features
-
-* Adding parrot version 0.10.1 ([f427480](https://github.com/deep-entertainment/egoventure-game-template/commit/f427480f4dcbd6cb16655952e3e8f9cd66bef707))
-
+* Adding egoventure version 1.0.0 ([47070af](https://github.com/deep-entertainment/egoventure-game-template/commit/47070afb2d1694daa4a1a73fde26eee36b7d68a8))
 
 ### Bug Fixes
 
 * Fixed icon for assetlib ([8806b8e](https://github.com/deep-entertainment/egoventure-game-template/commit/8806b8e0baf714681026573778d8e3306c0e8d95))
 * Fixed plugin loading workflow ([b9b2ace](https://github.com/deep-entertainment/egoventure-game-template/commit/b9b2ace62e3ed5455369340b8761c2bc8e1ca4a2))
-
-
 
 ## [0.33.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.32.1...0.33.0) (2022-01-23)
 
