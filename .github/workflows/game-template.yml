@@ -30,6 +30,9 @@ on:
             branch:
                 required: true
                 type: string
+        secrets:
+            token:
+                required: true
 
 name: Push to game template
 
