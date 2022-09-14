@@ -1,3 +1,12 @@
+## [0.41.0-develop.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.35.0...0.41.0-develop.0) (2022-09-14)
+
+
+### Features
+
+* Adding egoventure version 2.1.0 ([29aa4f5](https://github.com/deep-entertainment/egoventure-game-template/commit/29aa4f5999a6fdeb4614b95c92c4530f15b8de0e))
+
+
+
 ## [0.40.0-develop.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.35.0...0.40.0-develop.0) (2022-08-25)
 
 
