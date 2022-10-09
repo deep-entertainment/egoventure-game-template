@@ -1,3 +1,12 @@
+### [0.41.1-develop.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.35.0...0.41.1-develop.0) (2022-10-09)
+
+
+### Bug Fixes
+
+* cursor shape update while hidden ([755452c](https://github.com/deep-entertainment/egoventure-game-template/commit/755452c268526f50d7b7d0adf3cce88cb778bac8))
+
+
+
 ## [0.41.0-develop.0](https://github.com/deep-entertainment/egoventure-game-template/compare/0.35.0...0.41.0-develop.0) (2022-09-14)
 
 
