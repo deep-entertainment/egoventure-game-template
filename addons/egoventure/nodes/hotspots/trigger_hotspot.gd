@@ -12,11 +12,13 @@ signal item_used(item)
 
 # Show this hotspot depending on the boolean value of this state
 # variable
-var visibility_state: String = ""
-
+export(String) var visibility_state: String = ""
 
 # The list of valid inventory items that can be used on this hotspot
-var valid_inventory_items: Array = []
+export(Array, Resource) var valid_inventory_items: Array = []
+
+# Whether to show the hotspot indicator or not
+export(bool) var show_indicator = true
 
 
 # The hotspot indicator
@@ -42,7 +44,7 @@ func _process(_delta):
 
 # Handle the hotspot indicator
 func _input(event):
-	if event.is_action_pressed("hotspot_indicator"):
+	if show_indicator and event.is_action_pressed("hotspot_indicator"):
 		Speedy.hidden = true
 		_hotspot_indicator.show()
 	elif event.is_action_released("hotspot_indicator"):
@@ -106,13 +108,15 @@ func on_mouse_entered():
 			Cursors.override(
 				Cursors.Type.DEFAULT,
 				Inventory.selected_item.item.image_active,
-				Inventory.selected_item.item.image_active.get_size() / 2
+				Inventory.selected_item.item.image_active.get_size() / 2,
+				get_viewport().get_mouse_position() - Inventory.selected_item.item.image_active.get_size() / 2
 			)
 		else:
 			Cursors.override(
 				Cursors.Type.DEFAULT,
 				Inventory.selected_item.item.image_normal,
-				Inventory.selected_item.item.image_normal.get_size() / 2
+				Inventory.selected_item.item.image_normal.get_size() / 2,
+				get_viewport().get_mouse_position() - Inventory.selected_item.item.image_normal.get_size() / 2
 			)
 
 
@@ -123,7 +127,8 @@ func _on_mouse_exited():
 		Cursors.override(
 			Cursors.Type.DEFAULT,
 			Inventory.selected_item.item.image_normal,
-			Inventory.selected_item.item.image_normal.get_size() / 2
+			Inventory.selected_item.item.image_normal.get_size() / 2,
+			get_viewport().get_mouse_position() - Inventory.selected_item.item.image_normal.get_size() / 2
 		)
 	else:
 		Cursors.reset(Cursors.Type.USE)
@@ -135,22 +140,6 @@ func _on_pressed():
 		valid_inventory_items.has(Inventory.selected_item.item):
 		emit_signal("item_used", Inventory.selected_item.item)
 	
-
-# Return property list
-func _get_property_list():
-	var properties = []
-	properties.append({
-		"name": "visibility_state",
-		"type": TYPE_STRING,
-	})
-	properties.append({
-		"name": "valid_inventory_items",
-		"type": TYPE_ARRAY,
-		"hint": 24,
-		"hint_string": "17/17:InventoryItem"
-	})
-	return properties
-
 
 # Check wether the hotspot should be shown or hidden
 func _check_visibility():

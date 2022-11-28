@@ -52,6 +52,9 @@ var saves_exist: bool = false
 # A timer that runs down while a waiting screen is shown
 var wait_timer: Timer
 
+# Whether the game currently accepts input
+var interactive: bool = true setget _set_interactive
+
 
 # A cache of scenes for faster switching
 var _scene_cache: SceneCache
@@ -69,7 +72,7 @@ var _empty_image_texture: ImageTexture = null
 func _init():
 	# Workaround for faulty feature detection as described in
 	# https://github.com/godotengine/godot/issues/49113
-	is_touch = OS.get_name() == "Android" || OS.get_name() == "iPhone"
+	is_touch = OS.get_name() == "Android" || OS.get_name() == "iOS"
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	var userdir = Directory.new()
 	userdir.open("user://")
@@ -121,7 +124,6 @@ func configure(p_configuration: GameConfiguration):
 	Notepad.configure(configuration)
 	Inventory.configure(configuration)
 	Cursors.configure(configuration)
-	MapNotification.configure(configuration)
 	_scene_cache = SceneCache.new(
 		configuration.cache_scene_count, 
 		configuration.cache_scene_path,
@@ -164,6 +166,16 @@ func change_scene(path: String):
 					"res://addons/egoventure/nodes/eight_side_room.tscn"]:
 				is_multi_side_room = true
 	
+
+# Set whether dialog line skipping is enabled in parrot
+#
+# ** Arguments **
+#
+# - value: Whether skipping is enabled
+func set_parrot_skip_enabled(value: bool):
+	(state as BaseState).parrot_skip_enabled = value
+	Parrot.skip_enabled = value
+
 
 # Save the current state of the game
 #
@@ -319,6 +331,7 @@ func options_get_effects_level() -> float:
 	return in_game_configuration.effects_db
 	
 
+# Set full screen according to game configuration
 func set_full_screen():
 	if in_game_configuration.fullscreen:
 		OS.window_fullscreen = true
@@ -414,6 +427,8 @@ func _load(p_state: BaseState):
 	EgoVenture.target_view = EgoVenture.state.target_view
 	EgoVenture.current_location = EgoVenture.state.target_location
 	
+	self.set_parrot_skip_enabled(state.parrot_skip_enabled)
+	
 	for item in Inventory.get_items():
 		Inventory.remove_item(item)
 	for item in state.inventory_items:
@@ -422,8 +437,8 @@ func _load(p_state: BaseState):
 	for reset_type in Cursors.Type:
 		Cursors.reset(Cursors.Type[reset_type])
 
-	for cursor_type in state.overridden_cursors:
-		var _cursor = state.overridden_cursors[cursor_type]
+	for cursor_type in p_state.overridden_cursors:
+		var _cursor = p_state.overridden_cursors[cursor_type]
 		Cursors.override(cursor_type, _cursor.texture, _cursor.hotspot)
 	
 	game_started = true
@@ -499,3 +514,22 @@ func _warm_up_cache():
 	for scene in configuration.cache_permanent:
 		print_debug("Queueing load of permanent scene %s" % scene)
 		update_cache(scene)
+
+
+# Sets whether the game is currently accepting input or not
+#
+# ** Arguments **
+#
+# - value: true: Game accepts input, false: Game does not accept input
+func _set_interactive(value: bool):
+	interactive = value
+	if self.interactive:
+		Speedy.hidden = false
+		Boombox.ignore_pause = false
+		Parrot.ignore_pause = false
+		get_tree().paused = false
+	else:
+		Speedy.hidden = true
+		Boombox.ignore_pause = true
+		Parrot.ignore_pause = true
+		get_tree().paused = true

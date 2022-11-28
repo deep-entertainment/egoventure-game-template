@@ -113,10 +113,17 @@ func configure(configuration: GameConfiguration):
 	$Canvas/InventoryAnchor.theme = configuration.design_theme
 	$Canvas/InventoryAnchor/Panel.rect_min_size.y = configuration.inventory_size
 	_scroll_size = configuration.inventory_size
-	$Canvas/InventoryAnchor/Panel.add_stylebox_override(
-		"panel",
-		$Canvas/InventoryAnchor/Panel.get_stylebox("inventory_panel", "Panel")
-	)
+	
+	if EgoVenture.is_touch:
+		$Canvas/InventoryAnchor/Panel.add_stylebox_override(
+			"panel",
+			$Canvas/InventoryAnchor/Panel.get_stylebox("inventory_panel_touch", "Panel")
+		)
+	else:
+		$Canvas/InventoryAnchor/Panel.add_stylebox_override(
+			"panel",
+			$Canvas/InventoryAnchor/Panel.get_stylebox("inventory_panel", "Panel")
+		)
 	
 	$Canvas/InventoryAnchor/Panel/InventoryPanel/Reveal.texture_normal = \
 		configuration.inventory_texture_reveal
@@ -153,7 +160,14 @@ func enable():
 # - item: Item to add to the inventory
 # - skip_show: Skip the reveal animation of the inventory bar
 # - allow_duplicate: Allow to add an inventory item already in the inventory
-func add_item(item: InventoryItem, skip_show: bool = false, allow_duplicate: bool = false):
+# - position: Position in the list of inventory items where to add the new
+#   item (defaults to the end of the list)
+func add_item(
+	item: InventoryItem, 
+	skip_show: bool = false, 
+	allow_duplicate: bool = false, 
+	position: int = _inventory_items.size()
+):
 	if not allow_duplicate and has_item(item):
 		print(
 			"Item %s already is in the inventory. Rerufsing to add it twice" % \
@@ -167,7 +181,7 @@ func add_item(item: InventoryItem, skip_show: bool = false, allow_duplicate: boo
 		self,
 		"_on_triggered_inventory_item"
 	)
-	_inventory_items.append(inventory_item_node)
+	_inventory_items.insert(position, inventory_item_node)
 	_update()
 	if not EgoVenture.is_touch and not activated and not skip_show:
 		# Briefly show the inventory when it is not activated
@@ -299,7 +313,7 @@ func _on_Reveal_gui_input(event):
 			if DetailView.is_visible:
 				DetailView.hide()
 			else:
-				DetailView.show(Inventory.selected_item.item)
+				DetailView.show_with_item(Inventory.selected_item.item)
 
 
 # Wether to ignore game pauses

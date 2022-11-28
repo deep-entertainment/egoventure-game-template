@@ -30,6 +30,9 @@ on:
             branch:
                 required: true
                 type: string
+        secrets:
+            token:
+                required: true
 
 name: Push to game template
 
@@ -53,7 +56,7 @@ jobs:
                   repository: "deep-entertainment/egoventure-game-template"
                   ref: "${{ env.BRANCH }}"
                   path: "game-template"
-                  token: "${{ secrets.DEPLOYMENT_TOKEN }}"
+                  token: "${{ secrets.token }}"
                   fetch-depth: 0
             - name: "Copy ${{ env.ADDON }} version ${{ github.event.release.tag_name }}"
               run: |
